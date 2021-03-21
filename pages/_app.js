@@ -28,9 +28,9 @@ const MyApp = ({ Component, pageProps, router }) => {
         <meta property="og:type" content="website" />
       </Head>
       <ChakraProvider theme={theme}>
-        {router.pathname !== '/login' && <Nav />}
+        {/* {router.pathname !== '/login' && <Nav />} */}
         <Component {...pageProps} />
-        {router.pathname !== '/login' && <Footer />}
+        {/* {router.pathname !== '/login' && <Footer />} */}
       </ChakraProvider>
     </>
   )

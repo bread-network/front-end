@@ -1,12 +1,21 @@
 import { Button, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react'
 import { PasswordField } from './PasswordField'
+import { useRouter } from 'next/router'
 
 export const LoginForm = () => {
+    const router = useRouter()
+
     return (
         <form
             onSubmit={(e) => {
-                e.preventDefault()
-                // send to the other page
+                e.preventDefault();
+                try {
+                    localStorage.setItem('login', 'true');
+                }
+                catch {
+                    console.log();
+                }
+                router.push('/');
             }}
         >
             <Stack spacing="6">

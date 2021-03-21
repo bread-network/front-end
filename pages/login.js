@@ -11,9 +11,6 @@ const Login = () => {
     return (
         <Box bg={mode('gray.50', 'inherit')} minH="100vh" py="12" px={{ sm: '6', lg: '8' }}>
             <Box maxW={{ sm: 'md' }} mx={{ sm: 'auto' }} w={{ sm: 'full' }}>
-                {/* <Box mb={{ base: '10' }}>
-                    <Logo mx="auto" h="8" iconColor={mode('blue.600', 'blue.200')} />
-                </Box> */}
                 <Heading mt="6" textAlign="center" size="xl" fontWeight="extrabold">
                     Sign in to your account
                 </Heading>
