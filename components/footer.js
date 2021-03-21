@@ -1,6 +1,6 @@
 import { Container } from '@chakra-ui/layout'
 
-const Footer = ({}) => {
+const Footer = ({ }) => {
   return (
     <Container pb={4} maxW="100%" bg="black">
       <Container

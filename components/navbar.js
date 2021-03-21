@@ -1,7 +1,7 @@
 import { Container } from '@chakra-ui/layout'
 import { useBreakpointValue } from '@chakra-ui/react'
 
-const Nav = ({}) => {
+const Nav = ({ }) => {
   const flexDir = useBreakpointValue({ base: 'column', md: 'row' })
 
   return (
