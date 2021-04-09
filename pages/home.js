@@ -6,12 +6,7 @@ const Menu = (ind) => {
     {
       name: 'Bread',
       selected: false,
-      svg: (
-        <img
-          src="https://bread-multi-grain.vercel.app/logo.svg"
-          height="50px"
-        />
-      ),
+      svg: <img src="https://bread.vercel.app/bread.svg" height="50px" />,
     },
     {
       name: 'Home',

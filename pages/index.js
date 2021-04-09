@@ -15,10 +15,7 @@ const Index = () => {
       </Head>
       <div className="h-screen w-full flex flex-col items-center">
         <div className="flex flex-col items-start">
-          <img
-            className="mt-5 h-12"
-            src="https://bread-multi-grain.vercel.app/logo.svg"
-          />
+          <img className="mt-5 h-12" src="https://bread.vercel.app/bread.svg" />
           <h1 className="mt-8 text-orange-500 font-extrabold text-3xl">
             Log in to Bread
           </h1>
