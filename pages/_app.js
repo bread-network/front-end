@@ -11,6 +11,7 @@ const MyApp = ({ Component, pageProps }) => {
     <>
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="icon" href="https://bread-multi-grain.vercel.app/logo.svg" />
         <link
           media={typeMedia}
           href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap"
