@@ -1,39 +1,26 @@
-import '@/styles/global.css'
+import '../styles/globals.css'
 import Head from 'next/head'
-import Nav from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import {
-  ChakraProvider,
-  extendTheme
-} from "@chakra-ui/react";
-
-const theme = extendTheme({
-  fonts: {
-    heading: "Manrope",
-    body: "Manrope",
-  },
-});
-
-const MyApp = ({ Component, pageProps, router }) => {
+import { useEffect, useState } from 'react'
+const MyApp = ({ Component, pageProps }) => {
+  const [typeMedia, setMedia] = useState('print')
+  useEffect(() => {
+    setMedia('all')
+    document.getElementsByTagName('html')[0].setAttribute('lang', 'en')
+  }, [])
   return (
     <>
       <Head>
-        <meta charSet="utf-8" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          media={typeMedia}
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap"
+          rel="stylesheet"
         />
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:type" content="website" />
       </Head>
-      <ChakraProvider theme={theme}>
-        {/* {router.pathname !== '/login' && <Nav />} */}
+      <div className="font-display bg-white flex flex-col items-center">
         <Component {...pageProps} />
-        {/* {router.pathname !== '/login' && <Footer />} */}
-      </ChakraProvider>
+      </div>
     </>
   )
 }
-
 export default MyApp
