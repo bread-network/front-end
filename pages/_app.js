@@ -6,9 +6,7 @@ const MyApp = ({ Component, pageProps }) => {
   const [typeMedia, setMedia] = useState('print')
 
   useEffect(() => {
-    // set the media to all so that font loads on component mount
     setMedia('all')
-    // set the language of the page
     document.getElementsByTagName('html')[0].setAttribute('lang', 'en')
   }, [])
 
@@ -19,7 +17,7 @@ const MyApp = ({ Component, pageProps }) => {
         <link rel="icon" href="https://bread.vercel.app/bread.svg" />
         <link
           media={typeMedia}
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </Head>
