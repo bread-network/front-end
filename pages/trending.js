@@ -1,10 +1,11 @@
-import Button from '../components/Button'
-import Tweet from '../components/Tweet'
+import dynamic from 'next/dynamic'
+import Head from 'next/head'
+import Button from '@/components/Button'
 
 const Menu = (ind) => {
   const Options = [
     {
-      name: 'Bread',
+      name: '',
       selected: false,
       svg: <img src="https://bread.vercel.app/bread.svg" height="50px" />,
     },
@@ -178,22 +179,34 @@ const Tweets = [
   },
 ]
 
-const Home = () => {
-  return (
-    <div className="bg-white flex space-x-6">
-      <ul className="list-none">
-        {Menu(1).map((item) => (
-          <Button
-            key={item.name}
-            name={item.name}
-            selected={item.selected}
-            svg={item.svg}
-          />
-        ))}
+const TweetsList = dynamic(
+  () => import('@/components/ShowTweets'),
+  { ssr: false, loading: () => <p>...</p> }
+)
+
+const Trending = () => {
+  return <> <Head>
+    <title>Trending | Bread</title>
+  </Head>
+    <div className="bg-white flex md:space-x-12">
+      <ul className="hidden md:block list-none">
+        <div className='sticky top-4'>
+          {Menu(2).map((item) => (
+            <Button
+              key={item.name}
+              name={item.name}
+              selected={item.selected}
+              svg={item.svg}
+            />
+          ))}
+        </div>
       </ul>
-      <div className="flex flex-col max-w-[600px]">
-        <div className="p-2 flex flex-row justify-between items-center border">
-          <h5 className="text-lg font-extrabold">Home</h5>
+      <div className="flex flex-col w-full max-w-[600px]">
+        <div className="sticky top-0 z-10 bg-white p-2 flex flex-row justify-between items-center border border-gray-100">
+          <span className='flex flex-row items-center space-x-4'>
+            <img className='md:hidden' src="https://bread.vercel.app/bread.svg" height="50px" />
+            <h5 className="text-lg font-extrabold">Home</h5>
+          </span>
           <span
             title="Top Tweets"
             className="rounded-full p-2 hover:bg-yellow-100 text-yellow-500 cursor-pointer"
@@ -205,7 +218,7 @@ const Home = () => {
             </svg>
           </span>
         </div>
-        <div className="border p-2 flex flex-row space-x-4">
+        <div className="border border-gray-100 p-2 flex flex-row space-x-4">
           <a
             href="https://twitter.com/rishi_raj_jain_"
             className="relative h-12 w-12 object-cover"
@@ -293,13 +306,11 @@ const Home = () => {
         </div>
         <div className="bg-gray-100 py-1"></div>
         <div className="flex flex-col">
-          {Tweets.map((item, index) => (
-            <Tweet key={index} {...item} />
-          ))}
+          {Tweets && Tweets.length > 0 && <TweetsList tweets={Tweets} />}
         </div>
       </div>
     </div>
-  )
+  </>
 }
 
-export default Home
+export default Trending

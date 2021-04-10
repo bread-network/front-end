@@ -15,7 +15,7 @@ const Tweet = ({
   return (
     <div
       className={
-        'border p-2 flex flex-row space-x-4 ' +
+        'border border-gray-100 p-2 flex flex-row space-x-4 ' +
         (rounded ? 'rounded-[15px] ' : '') +
         (spacetop ? 'mt-3' : '')
       }

@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react'
 
 const MyApp = ({ Component, pageProps }) => {
   const [typeMedia, setMedia] = useState('print')
+
   useEffect(() => {
+    // set the media to all so that font loads on component mount
     setMedia('all')
+    // set the language of the page
     document.getElementsByTagName('html')[0].setAttribute('lang', 'en')
   }, [])
 
@@ -20,7 +23,7 @@ const MyApp = ({ Component, pageProps }) => {
           rel="stylesheet"
         />
       </Head>
-      <div className="font-display bg-white flex flex-col items-center">
+      <div className="font-display bg-white flex flex-col items-start md:items-center">
         <Component {...pageProps} />
       </div>
     </>
