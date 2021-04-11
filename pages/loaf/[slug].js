@@ -12,13 +12,13 @@ import { useRouter } from 'next/router'
 
 const TweetsList = dynamic(
     () => import('@/components/ShowTweets'),
-    { ssr: false, loading: () => <p>...</p> }
+    { ssr: false, loading: () => <BakingData /> }
 )
 
 const Loaf = () => {
     const router = useRouter();
     const { slug } = router.query;
-    const { data, error } = useSWR(`https://267d633340ff.ngrok.io/loafs/${slug}`, fetcher);
+    const { data, error } = useSWR(`https://d7a928d66a2c.ngrok.io/loafs/${slug}`, fetcher);
     console.log(data && data['sticks']);
 
     return <> <Head>

@@ -1,6 +1,5 @@
 import useSWR from 'swr'
 import Head from 'next/head'
-import dynamic from 'next/dynamic'
 import Menu from '@/components/Menu'
 import Button from '@/components/Button'
 import fetcher from '@/components/Fetcher'
@@ -9,17 +8,36 @@ import ErrorLoading from '@/components/ErrorLoading'
 import BakingData from '@/components/BakingData'
 import { useRouter } from 'next/router'
 import UserProfile from '@/components/UserProfile'
-
-const TweetsList = dynamic(
-    () => import('@/components/ShowTweets'),
-    { ssr: false, loading: () => <p>...</p> }
-)
+import { useEffect, useState } from 'react'
 
 const Loaf = () => {
     const router = useRouter();
     const { slug } = router.query;
-    const { data, error } = useSWR(`https://267d633340ff.ngrok.io/user/${slug}`, fetcher);
+    const { data, error } = useSWR(`https://d7a928d66a2c.ngrok.io/user/${slug}`, fetcher);
+    const [all_annotations, setAllAnnotations] = useState([]);
     console.log(data);
+
+    useEffect(() => {
+        if (data && data['user']['annotation']['annotations']) {
+            data['user']['annotation']['annotations'].map((item, index) => {
+                if (index <= 50) {
+                    const tweet_id = Object.keys(item)[0];
+                    fetch('https://d7a928d66a2c.ngrok.io/stick/' + tweet_id, {
+                        method: 'GET'
+                    })
+                        .then((resp) => resp.json())
+                        .then((resp) => {
+                            if (resp['stick']) setAllAnnotations((all_annotations) => [...all_annotations, resp['stick']])
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+                    return <div></div>
+                }
+                else { return }
+            })
+        }
+    }, [data]);
 
     return <> <Head>
         <title>{slug} | Bread</title>
@@ -39,13 +57,15 @@ const Loaf = () => {
                 </div>
             </ul>
             <div className="flex flex-col w-full max-w-[600px] md:min-w-[600px]">
-                <HomeBar />
+                {data && data['user'] && <HomeBar title={data['user']['name']} />}
                 <div className="bg-gray-100 py-1"></div>
                 {error && <ErrorLoading />}
                 {!error && !data && <BakingData />}
                 {!error && data && <div className="flex flex-col items-center">
-                    <UserProfile {...data['user']} />
+                    <UserProfile all_annotations={all_annotations} {...data['user']} />
                 </div>}
+                {error && <ErrorLoading />}
+                {!error && !data && <BakingData />}
             </div>
         </div>
     </>

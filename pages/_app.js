@@ -1,9 +1,12 @@
 import '../styles/globals.css'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import { Provider } from 'react-redux'
+import { useStore } from '../store'
 
 const MyApp = ({ Component, pageProps }) => {
   const [typeMedia, setMedia] = useState('print')
+  const store = useStore(pageProps.initialReduxState)
 
   useEffect(() => {
     setMedia('all')
@@ -22,7 +25,9 @@ const MyApp = ({ Component, pageProps }) => {
         />
       </Head>
       <div className="font-display bg-white flex flex-col items-start md:items-center">
-        <Component {...pageProps} />
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
       </div>
     </>
   )

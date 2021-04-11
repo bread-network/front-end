@@ -13,7 +13,7 @@ import BakingData from '@/components/BakingData'
 const Home = () => {
 
     const router = useRouter();
-    const { data, error } = useSWR('https://267d633340ff.ngrok.io/get-loafs', fetcher);
+    const { data, error } = useSWR('https://d7a928d66a2c.ngrok.io/get-loafs', fetcher);
     console.log(data);
 
     return <> <Head>
@@ -37,7 +37,7 @@ const Home = () => {
                 <HomeBar />
                 <Bake />
                 <div className="bg-gray-100 py-1"></div>
-                {error && <ErrorLoading /> }
+                {error && <ErrorLoading />}
                 {!error && !data && <BakingData />}
                 {!error && data && <div className="flex flex-row flex-wrap">
                     {data['loafs'].map((item) => <Link key={item.name} href={'/loaf/' + item.name}>

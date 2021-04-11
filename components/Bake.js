@@ -1,13 +1,17 @@
+import { useSelector } from "react-redux"
+
 const Bake = () => {
+    const { currentUserHandle, currentUserImage } = useSelector((state) => state);
+
     return <div className="border border-gray-100 p-2 flex flex-row space-x-4">
         <a
-            href="https://twitter.com/rishi_raj_jain_"
+            href={"/user/" + currentUserHandle}
             className="relative h-12 w-12 object-cover"
         >
             <span className="hover:opacity-10 absolute bg-black opacity-0 h-10 w-10 rounded-full"></span>
             <img
                 className="rounded-full border"
-                src="https://pbs.twimg.com/profile_images/1292192144464072704/YyKG_Mx3_400x400.jpg"
+                src={currentUserImage}
             />
         </a>
         <div className="flex flex-col w-full">

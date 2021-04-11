@@ -1,13 +1,52 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Index = () => {
   const router = useRouter()
+  const dispatcher = useDispatch()
+  const [showError, setError] = useState(false);
+  const { currentUserHandle } = useSelector((state) => state);
   const [userHandle, setUser] = useState('')
 
+  useEffect(() => {
+    if (currentUserHandle && currentUserHandle.length > 0) {
+      router.push('/home');
+    }
+  }, [currentUserHandle]);
+
   const login = () => {
-    console.log(userHandle)
+    fetch(`http://d7a928d66a2c.ngrok.io/verify-user/${userHandle}`, {
+      method: 'GET'
+    })
+      .then((resp) => resp.json())
+      .then((resp) => {
+        console.log(resp)
+        if (resp['exists']) {
+          dispatcher({
+            type: 'UPDATE_USER_HANDLE',
+            payload: {
+              user_handle: userHandle
+            }
+          });
+          dispatcher({
+            type: 'UPDATE_USER_IMG',
+            payload: {
+              user_img: resp['profile_image_url_https']
+            }
+          });
+        }
+        else {
+          setError(true);
+          setTimeout(() => {
+            setError(false);
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   return (
@@ -21,10 +60,15 @@ const Index = () => {
           <h1 className="mt-8 text-orange-500 font-extrabold text-3xl">
             Log in to Bread
           </h1>
+          {
+            showError && <div className='mt-3 p-2 text-md bg-red-500 rounded-lg text-white max-w-[300px]'>
+              The username and password you entered did not match our records. Please double-check and try again.
+            </div>
+          }
           <input
             value={userHandle}
             onChange={(e) => setUser(e.target.value)}
-            className="mt-5 focus:border-yellow-500 focus:outline-none appearance-none border rounded-md text-xl p-3"
+            className="mt-5 focus:border-gray-300 focus:outline-none appearance-none border rounded-md text-xl p-3"
             type="text"
             placeholder="username"
           />

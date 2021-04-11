@@ -1,3 +1,15 @@
+import { useRouter } from "next/router"
+
+function diff_minutes(dt2, dt1) {
+  var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+  diff /= 60;
+  return Math.abs(Math.round(diff));
+}
+
+function getRound(score) {
+  return Math.round(score * 10) / 10
+}
+
 const Tweet = ({
   username,
   useractualname,
@@ -13,18 +25,48 @@ const Tweet = ({
   rounded,
   spacetop,
   retweet,
+  annotation,
+  showMy
 }) => {
+
+  const router = useRouter();
+  console.log(annotation);
+  const classBg = (polarVal) => polarVal < 10 ? 'bg-red-900' :
+    polarVal < 20 ? 'bg-red-700' :
+      polarVal < 30 ? 'bg-red-500' :
+        polarVal < 40 ? 'bg-red-300' :
+          polarVal < 50 ? 'bg-red-100' :
+            polarVal == 50 ? 'bg-gray-300' :
+              polarVal < 60 ? 'bg-green-100' :
+                polarVal < 70 ? 'bg-green-300' :
+                  polarVal < 80 ? 'bg-green-500' :
+                    polarVal < 90 ? 'bg-green-700' :
+                      polarVal < 100 ? 'bg-green-900' : '';
+
   return (
     <div
       className={
-        'border border-gray-100 p-2 flex flex-row space-x-4 w-full ' +
+        'relative border border-gray-100 p-2 flex flex-row space-x-4 w-full ' +
         (rounded ? 'rounded-[15px] ' : '') +
         (spacetop ? 'mt-3' : '')
       }
     >
+      {annotation && <div className='absolute top-2 right-2 flex flex-row items-center'>
+        {annotation.topic && <span className='mr-2 border px-1  rounded-lg font-bold text-sm text-yellow-700'>
+          {annotation.topic}
+        </span>}
+        {annotation.polarity_score && <div className={`text-[10px] text-gray-50 h-6 w-6 flex flex-col items-center justify-center rounded-full ${classBg(getRound(annotation.polarity_score) * 100)}`}>
+          {getRound(annotation.polarity_score)}
+        </div>}
+      </div>}
+      {/* {showMy && <div className='absolute bottom-2 left-2 flex flex-row items-center z-10'>
+        <div className={`text-[10px] text-gray-50 h-6 w-6 flex flex-col items-center justify-center rounded-full ${classBg}`}>
+          {getRound(annotation.annotations)}
+        </div>
+      </div>} */}
       {!retweet && (
         <a
-          href={'https://twitter.com/' + username}
+          href={'/user/' + username}
           className="relative h-12 w-12 object-cover"
         >
           <span className="hover:opacity-10 absolute bg-black opacity-0 h-10 w-10 rounded-full"></span>
@@ -41,7 +83,7 @@ const Tweet = ({
             </svg>
           </button>
           <a
-            href={`https://twitter.com/${retweet['userhandle']}`}
+            href={`/user/${retweet['userhandle']}`}
             className="mt-1 relative h-12 w-12 object-cover"
           >
             <span className="hover:opacity-10 absolute bg-black opacity-0 h-10 w-10 rounded-full"></span>
@@ -53,7 +95,7 @@ const Tweet = ({
         {retweet && retweet['name'] && (
           <a
             className="hover:underline"
-            href={`https://twitter.com/${retweet['userhandle']}`}
+            href={`/user/${retweet['userhandle']}`}
           >
             <h5 className="font-bold text-xs text-gray-500">
               {retweet['name']} Retweeted
@@ -61,11 +103,11 @@ const Tweet = ({
           </a>
         )}
         <div className="flex space-x-1 items-center">
-          <a href={'https://twitter.com/' + username}>
+          {username && <a href={'/user/' + username}>
             <h4 className="hover:underline font-bold text-sm">
               {useractualname}
             </h4>
-          </a>
+          </a>}
           {userverified && <svg
             height="20"
             viewBox="0 0 24 24"
@@ -79,14 +121,14 @@ const Tweet = ({
               ></path>
             </g>
           </svg>}
-          <h4 className="font-light text-gray-500 text-sm">@{username}</h4>
+          {username && <h4 onClick={() => { router.push(`/user/${username}`) }} className="cursor-pointer font-light text-gray-500 text-sm">@{username}</h4>}
           <span>&middot;</span>
-          <h4
+          {time && <h4
             title={time}
             className="hover:underline font-light text-gray-500 text-sm"
           >
-            {time}
-          </h4>
+            {diff_minutes(new Date(), new Date(time))}m
+          </h4>}
         </div>
         {quoted && <Tweet spacetop={true} rounded={true} {...quoted} />}
         {!quoted && <h5 className="text-sm pr-12">{text}</h5>}
