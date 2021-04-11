@@ -1,9 +1,9 @@
-import { useRouter } from "next/router"
+import { useRouter } from 'next/router'
 
 function diff_minutes(dt2, dt1) {
-  var diff = (dt2.getTime() - dt1.getTime()) / 1000;
-  diff /= 60;
-  return Math.abs(Math.round(diff));
+  var diff = (dt2.getTime() - dt1.getTime()) / 1000
+  diff /= 60
+  return Math.abs(Math.round(diff))
 }
 
 function getRound(score) {
@@ -26,22 +26,37 @@ const Tweet = ({
   spacetop,
   retweet,
   annotation,
-  showMy
+  showMy,
+  score_polarity,
+  hideNameandDate,
 }) => {
+  const router = useRouter()
 
-  const router = useRouter();
-  console.log(annotation);
-  const classBg = (polarVal) => polarVal < 10 ? 'bg-red-900' :
-    polarVal < 20 ? 'bg-red-700' :
-      polarVal < 30 ? 'bg-red-500' :
-        polarVal < 40 ? 'bg-red-300' :
-          polarVal < 50 ? 'bg-red-100' :
-            polarVal == 50 ? 'bg-gray-300' :
-              polarVal < 60 ? 'bg-green-100' :
-                polarVal < 70 ? 'bg-green-300' :
-                  polarVal < 80 ? 'bg-green-500' :
-                    polarVal < 90 ? 'bg-green-700' :
-                      polarVal < 100 ? 'bg-green-900' : '';
+  console.log(annotation)
+  const classBg = (polarVal) =>
+    polarVal < 10
+      ? 'bg-red-900'
+      : polarVal < 20
+      ? 'bg-red-700'
+      : polarVal < 30
+      ? 'bg-red-500'
+      : polarVal < 40
+      ? 'bg-red-300'
+      : polarVal < 50
+      ? 'bg-red-100'
+      : polarVal == 50
+      ? 'bg-gray-300'
+      : polarVal < 60
+      ? 'bg-green-100'
+      : polarVal < 70
+      ? 'bg-green-300'
+      : polarVal < 80
+      ? 'bg-green-500'
+      : polarVal < 90
+      ? 'bg-green-700'
+      : polarVal <= 100
+      ? 'bg-green-900'
+      : ''
 
   return (
     <div
@@ -51,19 +66,35 @@ const Tweet = ({
         (spacetop ? 'mt-3' : '')
       }
     >
-      {annotation && <div className='absolute top-2 right-2 flex flex-row items-center'>
-        {annotation.topic && <span className='mr-2 border px-1  rounded-lg font-bold text-sm text-yellow-700'>
-          {annotation.topic}
-        </span>}
-        {annotation.polarity_score && <div className={`text-[10px] text-gray-50 h-6 w-6 flex flex-col items-center justify-center rounded-full ${classBg(getRound(annotation.polarity_score) * 100)}`}>
-          {getRound(annotation.polarity_score)}
-        </div>}
-      </div>}
-      {/* {showMy && <div className='absolute bottom-2 left-2 flex flex-row items-center z-10'>
-        <div className={`text-[10px] text-gray-50 h-6 w-6 flex flex-col items-center justify-center rounded-full ${classBg}`}>
-          {getRound(annotation.annotations)}
+      {annotation && (
+        <div className="absolute top-2 right-2 flex flex-row items-center">
+          {annotation.topic && (
+            <span className="mr-2 border px-1  rounded-lg font-bold text-sm text-yellow-700">
+              {annotation.topic}
+            </span>
+          )}
+          {annotation.polarity_score && (
+            <div
+              className={`text-[10px] text-gray-50 h-6 w-6 flex flex-col items-center justify-center rounded-full ${classBg(
+                getRound(annotation.polarity_score) * 100
+              )}`}
+            >
+              {getRound(annotation.polarity_score)}
+            </div>
+          )}
         </div>
-      </div>} */}
+      )}
+      {showMy && score_polarity >= 0 && (
+        <div className="absolute bottom-2 left-2 flex flex-row items-center z-10">
+          <div
+            className={`text-[10px] text-gray-500 h-6 w-6 flex flex-col items-center justify-center rounded-full ${classBg(
+              getRound(score_polarity) * 100
+            )}`}
+          >
+            {getRound(score_polarity)}
+          </div>
+        </div>
+      )}
       {!retweet && (
         <a
           href={'/user/' + username}
@@ -103,32 +134,47 @@ const Tweet = ({
           </a>
         )}
         <div className="flex space-x-1 items-center">
-          {username && <a href={'/user/' + username}>
-            <h4 className="hover:underline font-bold text-sm">
-              {useractualname}
+          {username && (
+            <a href={'/user/' + username}>
+              <h4 className="hover:underline font-bold text-sm">
+                {useractualname}
+              </h4>
+            </a>
+          )}
+          {userverified && (
+            <svg
+              height="20"
+              viewBox="0 0 24 24"
+              aria-label="Verified account"
+              className="text-yellow-500"
+            >
+              <g>
+                <path
+                  className="fill-current"
+                  d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"
+                ></path>
+              </g>
+            </svg>
+          )}
+          {username && !hideNameandDate && (
+            <h4
+              onClick={() => {
+                router.push(`/user/${username}`)
+              }}
+              className="cursor-pointer font-light text-gray-500 text-sm"
+            >
+              @{username}
             </h4>
-          </a>}
-          {userverified && <svg
-            height="20"
-            viewBox="0 0 24 24"
-            aria-label="Verified account"
-            className="text-yellow-500"
-          >
-            <g>
-              <path
-                className="fill-current"
-                d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"
-              ></path>
-            </g>
-          </svg>}
-          {username && <h4 onClick={() => { router.push(`/user/${username}`) }} className="cursor-pointer font-light text-gray-500 text-sm">@{username}</h4>}
-          <span>&middot;</span>
-          {time && <h4
-            title={time}
-            className="hover:underline font-light text-gray-500 text-sm"
-          >
-            {diff_minutes(new Date(), new Date(time))}m
-          </h4>}
+          )}
+          {!hideNameandDate && <span>&middot;</span>}
+          {time && !hideNameandDate && (
+            <h4
+              title={time}
+              className="hover:underline font-light text-gray-500 text-sm"
+            >
+              {diff_minutes(new Date(), new Date(time))}m
+            </h4>
+          )}
         </div>
         {quoted && <Tweet spacetop={true} rounded={true} {...quoted} />}
         {!quoted && <h5 className="text-sm pr-12">{text}</h5>}
