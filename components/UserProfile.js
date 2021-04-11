@@ -22,7 +22,7 @@ const UserProfile = ({
     <div className="relative flex flex-col">
       <img
         src={profile_background_image_url_https}
-        className="w-full h-48 mb-60 object-cover"
+        className="w-full h-48 mb-56 object-cover"
       />
       <div className="flex flex-col absolute top-32 left-5 items-start">
         <img
@@ -43,6 +43,9 @@ const UserProfile = ({
           <span className="ml-1">Correctly annotated breads</span>
         </span>
       </div>
+      <h1 className="border-t text-green-500 text-md font-bold pt-3 mb-3">
+        My Annotations
+      </h1>
       {all_annotations && all_annotations.length > 0 && (
         <TweetsList showMy={true} tweets={all_annotations} />
       )}
