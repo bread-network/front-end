@@ -20,9 +20,10 @@ const Loaf = () => {
   const router = useRouter()
   const [weather, setWeath] = useState(false)
   const [toAno, setToAno] = useState([])
+  const {requestPrefix}= useSelector((state) => state)
   const { slug } = router.query
   const { data, error } = useSWR(
-    `https://41fbe093e4cd.ngrok.io/loafs/${slug}`,
+    `${requestPrefix}/loafs/${slug}`,
     fetcher
   )
   const { currentUserHandle } = useSelector((state) => state)
@@ -31,7 +32,7 @@ const Loaf = () => {
   useEffect(() => {
     if (slug)
       fetch(
-        `https://41fbe093e4cd.ngrok.io/annotation-request/${currentUserHandle}/${slug}`,
+        `${requestPrefix}/annotation-request/${currentUserHandle}/${slug}`,
         {
           method: 'GET',
         }
@@ -56,7 +57,7 @@ const Loaf = () => {
       score: sliderVal / 100,
     })
     fetch(
-      `https://41fbe093e4cd.ngrok.io/annotate?username=${currentUserHandle}&stick_id=${toAno[0].id}&score=${sliderVal / 100}`,
+      `${requestPrefix}/annotate?username=${currentUserHandle}&stick_id=${toAno[0].id}&score=${sliderVal / 100}`,
       {
         method: 'POST',
       }

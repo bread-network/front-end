@@ -2,13 +2,23 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
+import { IP } from '@/components/port'
 
 const Index = () => {
   const router = useRouter()
   const dispatcher = useDispatch()
   const [showError, setError] = useState(false)
-  const { currentUserHandle } = useSelector((state) => state)
+  const { requestPrefix, currentUserHandle } = useSelector((state) => state)
   const [userHandle, setUser] = useState('')
+
+  useEffect(() => {
+    dispatcher({
+      type: 'UPDATE_IP',
+      payload: {
+        ip: IP
+      }
+    })
+  }, [])
 
   useEffect(() => {
     if (currentUserHandle && currentUserHandle.length > 0) {
@@ -17,7 +27,7 @@ const Index = () => {
   }, [currentUserHandle])
 
   const login = () => {
-    fetch(`http://41fbe093e4cd.ngrok.io/verify-user/${userHandle}`, {
+    fetch(`${requestPrefix}/verify-user/${userHandle}`, {
       method: 'GET',
     })
       .then((resp) => resp.json())
@@ -77,11 +87,10 @@ const Index = () => {
               login()
             }}
             disabled={userHandle.length <= 2}
-            className={`${
-              userHandle.length <= 2
-                ? 'bg-yellow-300 cursor-not-allowed'
-                : 'bg-yellow-400 shadow cursor-pointer'
-            } w-full focus:outline-none text-white mt-7 flex py-2 pl-3 pr-4 rounded-full font-bold space-x-4 items-center justify-center`}
+            className={`${userHandle.length <= 2
+              ? 'bg-yellow-300 cursor-not-allowed'
+              : 'bg-yellow-400 shadow cursor-pointer'
+              } w-full focus:outline-none text-white mt-7 flex py-2 pl-3 pr-4 rounded-full font-bold space-x-4 items-center justify-center`}
           >
             <span className="text-md py-1"> Login </span>
           </button>

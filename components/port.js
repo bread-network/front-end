@@ -1,0 +1,1 @@
+export const IP= 'https://41fbe093e4cd.ngrok.io' // dont push ending slash

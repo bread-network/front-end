@@ -9,6 +9,7 @@ import ErrorLoading from '@/components/ErrorLoading'
 import BakingData from '@/components/BakingData'
 import fetcher from '@/components/Fetcher'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 const TweetsList = dynamic(() => import('@/components/ShowTweets'), {
   ssr: false,
@@ -17,8 +18,9 @@ const TweetsList = dynamic(() => import('@/components/ShowTweets'), {
 
 const Trending = () => {
   const router = useRouter()
+  const {requestPrefix}= useSelector((state) => state)
   const { data, error } = useSWR(
-    `https://41fbe093e4cd.ngrok.io/trending`,
+    `${requestPrefix}/trending`,
     fetcher
   )
   console.log(data)

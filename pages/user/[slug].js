@@ -9,12 +9,14 @@ import BakingData from '@/components/BakingData'
 import { useRouter } from 'next/router'
 import UserProfile from '@/components/UserProfile'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const Loaf = () => {
   const router = useRouter()
   const { slug } = router.query
+  const {requestPrefix}= useSelector((state) => state)
   const { data, error } = useSWR(
-    `https://41fbe093e4cd.ngrok.io/user/${slug}`,
+    `${requestPrefix}/user/${slug}`,
     fetcher
   )
   const [all_annotations, setAllAnnotations] = useState([])
@@ -25,7 +27,7 @@ const Loaf = () => {
       data['user']['annotation']['annotations'].map((item, index) => {
         if (index <= 50) {
           const tweet_id = Object.keys(item)[0]
-          fetch('https://41fbe093e4cd.ngrok.io/stick/' + tweet_id, {
+          fetch(`${requestPrefix}/stick/` + tweet_id, {
             method: 'GET',
           })
             .then((resp) => resp.json())

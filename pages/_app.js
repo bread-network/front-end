@@ -10,7 +10,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   useEffect(() => {
     setMedia('all')
-    document.getElementsByTagName('html')[0].setAttribute('lang', 'en')
+    document.getElementsByTagName('html')[0].setAttribute('lang', 'en')    
   }, [])
 
   return (
