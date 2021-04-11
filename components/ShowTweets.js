@@ -1,28 +1,31 @@
 import Tweet from '@/components/Tweet'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const EachTweet = ({ showMy, item, hideNameandDate }) => {
   const [pass_item, set_pass_item] = useState(item)
   console.log('item', item)
 
-  if (showMy) {
-    fetch(
-      `https://d7a928d66a2c.ngrok.io/user-annotation/${item.username}/${item.id}`,
-      {
-        method: 'GET',
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res)
-        if (res['score'] && res['score'] >= 0) {
-          set_pass_item({ ...item, score_polarity: res['score'] })
+  useEffect(() => {
+    if (showMy) {
+      fetch(
+        `https://d7a928d66a2c.ngrok.io/user-annotation/${item.username}/${item.id}`,
+        {
+          method: 'GET',
         }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res)
+          if (res['score'] && res['score'] >= 0) {
+            set_pass_item({ ...item, score_polarity: res['score'] })
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [])
+
   return (
     <Tweet hideNameandDate={hideNameandDate} showMy={showMy} {...pass_item} />
   )

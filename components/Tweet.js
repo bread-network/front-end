@@ -166,15 +166,15 @@ const Tweet = ({
               @{username}
             </h4>
           )}
-          {!hideNameandDate && <span>&middot;</span>}
-          {time && !hideNameandDate && (
+          {/* {!hideNameandDate && <span>&middot;</span>} */}
+          {/* {time && !hideNameandDate && (
             <h4
               title={time}
               className="hover:underline font-light text-gray-500 text-sm"
             >
               {diff_minutes(new Date(), new Date(time))}m
             </h4>
-          )}
+          )} */}
         </div>
         {quoted && <Tweet spacetop={true} rounded={true} {...quoted} />}
         {!quoted && <h5 className="text-sm pr-12">{text}</h5>}
