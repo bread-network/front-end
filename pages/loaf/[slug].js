@@ -22,7 +22,7 @@ const Loaf = () => {
   const [toAno, setToAno] = useState([])
   const { slug } = router.query
   const { data, error } = useSWR(
-    `https://d7a928d66a2c.ngrok.io/loafs/${slug}`,
+    `https://41fbe093e4cd.ngrok.io/loafs/${slug}`,
     fetcher
   )
   const { currentUserHandle } = useSelector((state) => state)
@@ -31,7 +31,7 @@ const Loaf = () => {
   useEffect(() => {
     if (slug)
       fetch(
-        `https://d7a928d66a2c.ngrok.io/annotation-request/${currentUserHandle}/${slug}`,
+        `https://41fbe093e4cd.ngrok.io/annotation-request/${currentUserHandle}/${slug}`,
         {
           method: 'GET',
         }
@@ -56,19 +56,14 @@ const Loaf = () => {
       score: sliderVal / 100,
     })
     fetch(
-      `https://d7a928d66a2c.ngrok.io/annotation-request/${currentUserHandle}/${slug}`,
+      `https://41fbe093e4cd.ngrok.io/annotate?username=${currentUserHandle}&stick_id=${toAno[0].id}&score=${sliderVal / 100}`,
       {
         method: 'POST',
-        body: JSON.stringify({
-          username: currentUserHandle,
-          stick_id: toAno[0].id,
-          score: sliderVal / 100,
-        }),
       }
     )
       .then((resp) => resp.json())
       .then((resp) => {
-        console.log(resp)
+        setWeath(false);
       })
       .catch((error) => {
         console.log(error)

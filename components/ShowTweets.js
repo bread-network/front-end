@@ -8,7 +8,7 @@ const EachTweet = ({ showMy, item, hideNameandDate }) => {
   useEffect(() => {
     if (showMy) {
       fetch(
-        `https://d7a928d66a2c.ngrok.io/user-annotation/${item.username}/${item.id}`,
+        `https://41fbe093e4cd.ngrok.io/user-annotation/${item.username}/${item.id}`,
         {
           method: 'GET',
         }

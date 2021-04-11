@@ -17,7 +17,7 @@ const Index = () => {
   }, [currentUserHandle])
 
   const login = () => {
-    fetch(`http://d7a928d66a2c.ngrok.io/verify-user/${userHandle}`, {
+    fetch(`http://41fbe093e4cd.ngrok.io/verify-user/${userHandle}`, {
       method: 'GET',
     })
       .then((resp) => resp.json())

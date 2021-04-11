@@ -14,7 +14,7 @@ const Loaf = () => {
   const router = useRouter()
   const { slug } = router.query
   const { data, error } = useSWR(
-    `https://d7a928d66a2c.ngrok.io/user/${slug}`,
+    `https://41fbe093e4cd.ngrok.io/user/${slug}`,
     fetcher
   )
   const [all_annotations, setAllAnnotations] = useState([])
@@ -25,7 +25,7 @@ const Loaf = () => {
       data['user']['annotation']['annotations'].map((item, index) => {
         if (index <= 50) {
           const tweet_id = Object.keys(item)[0]
-          fetch('https://d7a928d66a2c.ngrok.io/stick/' + tweet_id, {
+          fetch('https://41fbe093e4cd.ngrok.io/stick/' + tweet_id, {
             method: 'GET',
           })
             .then((resp) => resp.json())
@@ -69,7 +69,7 @@ const Loaf = () => {
             ))}
           </div>
         </ul>
-        <div className="flex flex-col w-full max-w-[600px] md:min-w-[600px]">
+        <div className="flex flex-col w-full max-w-[600px] md:min-w-[75vw]">
           {data && data['user'] && <HomeBar title={data['user']['name']} />}
           <div className="bg-gray-100 py-1"></div>
           {error && <ErrorLoading />}

@@ -1,14 +1,14 @@
+import useSWR from 'swr'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import Menu from '@/components/Menu'
 import Bake from '@/components/Bake'
 import Button from '@/components/Button'
-import { useRouter } from 'next/router'
 import HomeBar from '@/components/HomeBar'
 import ErrorLoading from '@/components/ErrorLoading'
 import BakingData from '@/components/BakingData'
-import useSWR from 'swr'
 import fetcher from '@/components/Fetcher'
+import { useRouter } from 'next/router'
 
 const TweetsList = dynamic(() => import('@/components/ShowTweets'), {
   ssr: false,
@@ -18,14 +18,13 @@ const TweetsList = dynamic(() => import('@/components/ShowTweets'), {
 const Trending = () => {
   const router = useRouter()
   const { data, error } = useSWR(
-    `https://d7a928d66a2c.ngrok.io/trending`,
+    `https://41fbe093e4cd.ngrok.io/trending`,
     fetcher
   )
   console.log(data)
 
   return (
     <>
-      {' '}
       <Head>
         <title>Trending | Bread</title>
       </Head>
@@ -45,7 +44,7 @@ const Trending = () => {
             ))}
           </div>
         </ul>
-        <div className="flex flex-col w-full max-w-[600px] md:min-w-[600px]">
+        <div className="flex flex-col w-full max-w-[600px] md:min-w-[75vw]">
           <HomeBar
             title="Trending"
             svg={
@@ -65,7 +64,7 @@ const Trending = () => {
           {!error && !data && <BakingData />}
           {!error && data && (
             <div className="flex flex-col items-center">
-              {<TweetsList tweets={data['sticks']} />}
+              {<TweetsList tweets={data['sticks'].sort((a, b) => (a.annotation.trend_rank > b.annotation.trend_rank) ? 1 : ((b.annotation.trend_rank > a.annotation.trend_rank) ? -1 : 0))} />}
             </div>
           )}
         </div>
