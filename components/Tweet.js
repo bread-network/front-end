@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 function diff_minutes(dt2, dt1) {
@@ -37,26 +38,26 @@ const Tweet = ({
     polarVal < 10
       ? 'bg-red-900'
       : polarVal < 20
-      ? 'bg-red-700'
-      : polarVal < 30
-      ? 'bg-red-500'
-      : polarVal < 40
-      ? 'bg-red-300'
-      : polarVal < 50
-      ? 'bg-red-100'
-      : polarVal == 50
-      ? 'bg-gray-300'
-      : polarVal < 60
-      ? 'bg-green-100'
-      : polarVal < 70
-      ? 'bg-green-300'
-      : polarVal < 80
-      ? 'bg-green-500'
-      : polarVal < 90
-      ? 'bg-green-700'
-      : polarVal <= 100
-      ? 'bg-green-900'
-      : ''
+        ? 'bg-red-700'
+        : polarVal < 30
+          ? 'bg-red-500'
+          : polarVal < 40
+            ? 'bg-red-300'
+            : polarVal < 50
+              ? 'bg-red-100'
+              : polarVal == 50
+                ? 'bg-gray-300'
+                : polarVal < 60
+                  ? 'bg-green-100'
+                  : polarVal < 70
+                    ? 'bg-green-300'
+                    : polarVal < 80
+                      ? 'bg-green-500'
+                      : polarVal < 90
+                        ? 'bg-green-700'
+                        : polarVal <= 100
+                          ? 'bg-green-900'
+                          : ''
 
   return (
     <div
@@ -96,13 +97,16 @@ const Tweet = ({
         </div>
       )}
       {!retweet && (
-        <a
-          href={'/user/' + username}
-          className="relative h-12 w-12 object-cover"
-        >
-          <span className="hover:opacity-10 absolute bg-black opacity-0 h-10 w-10 rounded-full"></span>
-          <img className="rounded-full border" src={userimg} />
-        </a>
+
+        <Link href={'/user/' + username}>
+          <a
+
+            className="relative h-12 w-12 object-cover"
+          >
+            <span className="hover:opacity-10 absolute bg-black opacity-0 h-10 w-10 rounded-full"></span>
+            <img className="rounded-full border" src={userimg} />
+          </a>
+        </Link>
       )}
       {retweet && retweet['userhandle'] && (
         <div className="flex flex-col items-end">
@@ -124,22 +128,23 @@ const Tweet = ({
       )}
       <div className="flex flex-col w-full">
         {retweet && retweet['name'] && (
-          <a
-            className="hover:underline"
-            href={`/user/${retweet['userhandle']}`}
-          >
-            <h5 className="font-bold text-xs text-gray-500">
-              {retweet['name']} Retweeted
-            </h5>
-          </a>
+          <Link href={`/user/${retweet['userhandle']}`}>
+            <a className="hover:underline">
+              <h5 className="font-bold text-xs text-gray-500">
+                {retweet['name']} Retweeted
+              </h5>
+            </a>
+          </Link>
         )}
         <div className="flex space-x-1 items-center">
           {username && (
-            <a href={'/user/' + username}>
+            <Link href={'/user/' + username}>
+            <a>
               <h4 className="hover:underline font-bold text-sm">
                 {useractualname}
               </h4>
             </a>
+            </Link>
           )}
           {userverified && (
             <svg

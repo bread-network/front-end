@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
 const Bake = () => {
@@ -5,13 +6,14 @@ const Bake = () => {
 
   return (
     <div className="border border-gray-100 p-2 flex flex-row space-x-4">
-      <a
-        href={'/user/' + currentUserHandle}
-        className="relative h-12 w-12 object-cover"
-      >
-        <span className="hover:opacity-10 absolute bg-black opacity-0 h-10 w-10 rounded-full"></span>
-        <img className="rounded-full border" src={currentUserImage} />
-      </a>
+      <Link href={'/user/' + currentUserHandle}>
+        <a
+          className="relative h-12 w-12 object-cover"
+        >
+          <span className="hover:opacity-10 absolute bg-black opacity-0 h-10 w-10 rounded-full"></span>
+          <img className="rounded-full border" src={currentUserImage} />
+        </a>
+      </Link>
       <div className="flex flex-col w-full">
         <input
           placeholder="What's Baking?"
