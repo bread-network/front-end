@@ -10,6 +10,7 @@ import BakingData from '@/components/BakingData'
 import fetcher from '@/components/Fetcher'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { IP } from '@/components/port'
 
 const TweetsList = dynamic(() => import('@/components/ShowTweets'), {
   ssr: false,
@@ -18,9 +19,8 @@ const TweetsList = dynamic(() => import('@/components/ShowTweets'), {
 
 const Trending = () => {
   const router = useRouter()
-  const {requestPrefix}= useSelector((state) => state)
   const { data, error } = useSWR(
-    `${requestPrefix}/trending`,
+    `${IP}/trending`,
     fetcher
   )
   console.log(data)

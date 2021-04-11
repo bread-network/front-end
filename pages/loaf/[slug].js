@@ -10,6 +10,7 @@ import BakingData from '@/components/BakingData'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { IP } from '@/components/port'
 
 const TweetsList = dynamic(() => import('@/components/ShowTweets'), {
   ssr: false,
@@ -20,10 +21,9 @@ const Loaf = () => {
   const router = useRouter()
   const [weather, setWeath] = useState(false)
   const [toAno, setToAno] = useState([])
-  const {requestPrefix}= useSelector((state) => state)
   const { slug } = router.query
   const { data, error } = useSWR(
-    `${requestPrefix}/loafs/${slug}`,
+    `${IP}/loafs/${slug}`,
     fetcher
   )
   const { currentUserHandle } = useSelector((state) => state)
@@ -32,7 +32,7 @@ const Loaf = () => {
   useEffect(() => {
     if (slug)
       fetch(
-        `${requestPrefix}/annotation-request/${currentUserHandle}/${slug}`,
+        `${IP}/annotation-request/${currentUserHandle}/${slug}`,
         {
           method: 'GET',
         }
@@ -57,7 +57,7 @@ const Loaf = () => {
       score: sliderVal / 100,
     })
     fetch(
-      `${requestPrefix}/annotate?username=${currentUserHandle}&stick_id=${toAno[0].id}&score=${sliderVal / 100}`,
+      `${IP}/annotate?username=${currentUserHandle}&stick_id=${toAno[0].id}&score=${sliderVal / 100}`,
       {
         method: 'POST',
       }

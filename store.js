@@ -6,8 +6,7 @@ let store
 
 const initialState = {
   currentUserHandle: '',
-  currentUserImage: 'https://pbs.twimg.com/profile_images/1292192144464072704/YyKG_Mx3_400x400.jpg',
-  requestPrefix: ''
+  currentUserImage: 'https://pbs.twimg.com/profile_images/1292192144464072704/YyKG_Mx3_400x400.jpg'
 }
 
 const reducer = (state = initialState, action) => {
@@ -16,11 +15,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         currentUserHandle: action.payload.user_handle
-      }
-    case 'UPDATE_IP':
-      return {
-        ...state,
-        requestPrefix: action.payload.ip
       }
     case 'UPDATE_USER_IMG':
       return {

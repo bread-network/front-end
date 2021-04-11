@@ -1,16 +1,16 @@
 import Tweet from '@/components/Tweet'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { IP } from './port'
 
 const EachTweet = ({ showMy, item, hideNameandDate }) => {
   const [pass_item, set_pass_item] = useState(item)
   console.log('item', item)
-  const {requestPrefix}= useSelector((state) => state)
 
   useEffect(() => {
     if (showMy) {
       fetch(
-        `${requestPrefix}/user-annotation/${item.username}/${item.id}`,
+        `${IP}/user-annotation/${item.username}/${item.id}`,
         {
           method: 'GET',
         }

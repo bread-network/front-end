@@ -10,13 +10,13 @@ import { useRouter } from 'next/router'
 import UserProfile from '@/components/UserProfile'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { IP } from '@/components/port'
 
 const Loaf = () => {
   const router = useRouter()
   const { slug } = router.query
-  const {requestPrefix}= useSelector((state) => state)
   const { data, error } = useSWR(
-    `${requestPrefix}/user/${slug}`,
+    `${IP}/user/${slug}`,
     fetcher
   )
   const [all_annotations, setAllAnnotations] = useState([])
@@ -27,7 +27,7 @@ const Loaf = () => {
       data['user']['annotation']['annotations'].map((item, index) => {
         if (index <= 50) {
           const tweet_id = Object.keys(item)[0]
-          fetch(`${requestPrefix}/stick/` + tweet_id, {
+          fetch(`${IP}/stick/` + tweet_id, {
             method: 'GET',
           })
             .then((resp) => resp.json())

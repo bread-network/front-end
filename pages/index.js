@@ -8,7 +8,7 @@ const Index = () => {
   const router = useRouter()
   const dispatcher = useDispatch()
   const [showError, setError] = useState(false)
-  const { requestPrefix, currentUserHandle } = useSelector((state) => state)
+  const { currentUserHandle } = useSelector((state) => state)
   const [userHandle, setUser] = useState('')
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Index = () => {
   }, [currentUserHandle])
 
   const login = () => {
-    fetch(`${requestPrefix}/verify-user/${userHandle}`, {
+    fetch(`${IP}/verify-user/${userHandle}`, {
       method: 'GET',
     })
       .then((resp) => resp.json())

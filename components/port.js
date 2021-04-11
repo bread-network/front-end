@@ -1,1 +1,1 @@
-export const IP= 'https://41fbe093e4cd.ngrok.io' // dont push ending slash
+export const IP= 'http://localhost:5000' // dont push ending slash

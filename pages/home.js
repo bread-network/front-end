@@ -10,12 +10,12 @@ import { useRouter } from 'next/router'
 import ErrorLoading from '@/components/ErrorLoading'
 import BakingData from '@/components/BakingData'
 import { useSelector } from 'react-redux'
+import { IP } from '@/components/port'
 
 const Home = () => {
   const router = useRouter()
-  const {requestPrefix}= useSelector((state) => state)
   const { data, error } = useSWR(
-    `${requestPrefix}/get-loafs`,
+    `${IP}/get-loafs`,
     fetcher
   )
   console.log(data)
