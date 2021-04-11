@@ -8,7 +8,7 @@ function diff_minutes(dt2, dt1) {
 }
 
 function getRound(score) {
-  return Math.round(score * 10) / 10
+  return Math.round(score * 10) / 100
 }
 
 const Tweet = ({
