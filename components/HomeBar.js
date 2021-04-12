@@ -4,7 +4,7 @@ const HomeBar = ({ title, svg }) => {
       <span className="flex flex-row items-center space-x-4">
         <img
           className="md:hidden"
-          src="https://bread.vercel.app/bread.svg"
+          src="/bread.svg"
           height="50px"
         />
         <h5 className="text-lg font-extrabold">{title ? title : 'Home'}</h5>
