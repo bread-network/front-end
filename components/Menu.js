@@ -6,7 +6,7 @@ const Menu = (ind) => {
     {
       name: '',
       selected: false,
-      svg: <img src="/bread.svg" height="50px" />,
+      svg: <img src="bread.svg" height="50px" />,
       route: '/home',
     },
     {
