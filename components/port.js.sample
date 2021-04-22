@@ -1,0 +1,1 @@
+export const IP= 'https://my_url.com/bread_api' // dont push ending slash
