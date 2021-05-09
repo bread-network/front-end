@@ -1,23 +1,26 @@
-# Next.js + Tailwind CSS Example
+## bRead: Changing the way you consume content on Social Media
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) (v2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+<p id="bRead-image" align="center">
+  <a href="https://bread.vercel.app/">  
+    <img alt="bRead Network" title="bRead Network" src="https://bread.vercel.app/og-image.png" width="100%">
+  </a>
+</p>
 
-It uses the new [`@tailwindcss/jit`](https://github.com/tailwindlabs/tailwindcss-jit) engine for Tailwind CSS.
+<p id="bRead-stack" align="center">
+------- Built with Next.js, SWR, TailwindCSS, React-Redux, Vercel -------
+</p>
 
-## Deploy your own
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+## Table of Contents
+- [Introduction](#introduction)
+- [Feedback](#feedback)
+- [bRead Owners](#bread-owners)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## Introduction
+bRead is a new outlook on interacting with social media where people view multiple sides of a Debate, Question or News Topic and contribute to the conversation, hence delivering discourse in an organized, ethical and user-centric function.
 
-## How to use
+## Feedback
+Submit Your Precious Feedback @ https://bit.ly/bread-feedback
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## bRead Owners
+Amogh Gulati | Arundhati Bhattacharya | Asmit Singh | Atishay Jain | Chirag Jain | Paras Mehan | Rachit Jain | Rishi Raj Jain | Rohan Rajpal | Vrinda Narayan | Ponnurangam Kumaraguru
