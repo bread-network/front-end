@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { IP } from '@/components/port'
+import ReactSlider from 'react-slider'
 
 const TweetsList = dynamic(() => import('@/components/ShowTweets'), {
   ssr: false,
@@ -20,23 +21,18 @@ const TweetsList = dynamic(() => import('@/components/ShowTweets'), {
 const Loaf = () => {
   const router = useRouter()
   const [weather, setWeath] = useState(false)
+  const [polarityMargin, setMargin] = useState(0.25)
   const [toAno, setToAno] = useState([])
   const { slug } = router.query
-  const { data, error } = useSWR(
-    `${IP}/loafs/${slug}`,
-    fetcher
-  )
+  const { data, error } = useSWR(`${IP}/loafs/${slug}`, fetcher)
   const { currentUserHandle } = useSelector((state) => state)
   const [sliderVal, setSliderVal] = useState(50)
 
   useEffect(() => {
     if (slug)
-      fetch(
-        `${IP}/annotation-request/${currentUserHandle}/${slug}`,
-        {
-          method: 'GET',
-        }
-      )
+      fetch(`${IP}/annotation-request/${currentUserHandle}/${slug}`, {
+        method: 'GET',
+      })
         .then((resp) => resp.json())
         .then((resp) => {
           if (resp['annotation']) {
@@ -57,14 +53,16 @@ const Loaf = () => {
       score: sliderVal / 100,
     })
     fetch(
-      `${IP}/annotate?username=${currentUserHandle}&stick_id=${toAno[0].id}&score=${sliderVal / 100}`,
+      `${IP}/annotate?username=${currentUserHandle}&stick_id=${
+        toAno[0].id
+      }&score=${sliderVal / 100}`,
       {
         method: 'POST',
       }
     )
       .then((resp) => resp.json())
       .then((resp) => {
-        setWeath(false);
+        setWeath(false)
       })
       .catch((error) => {
         console.log(error)
@@ -98,10 +96,7 @@ const Loaf = () => {
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                    <img
-                      src="/bread.svg"
-                      height="50px"
-                    />
+                    <img src="/bread.svg" height="50px" />
                   </div>
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <h3
@@ -171,7 +166,22 @@ const Loaf = () => {
               />
             ))}
           </div>
+          <div className="sticky top-64">
+            <ReactSlider
+              step={0.03}
+              min={0}
+              max={0.25}
+              className="w-full h-3 pr-2 my-4 bg-gray-200 rounded-md "
+              thumbClassName="transform translate-y-1 bottom-0 w-5 h-5  bg-yellow-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 -top-2px"
+              value={polarityMargin}
+              onChange={(value) => {
+                setMargin(value)
+              }}
+            />
+            Intensity Adjustment
+          </div>
         </ul>
+
         <div className="flex flex-col w-full max-w-[600px] md:min-w-[75vw]">
           <HomeBar title={slug} />
           <div className="bg-gray-100 py-1"></div>
@@ -184,7 +194,9 @@ const Loaf = () => {
                   <TweetsList
                     hideNameandDate={true}
                     tweets={data['sticks'].filter(
-                      (item) => item.annotation.polarity_score > 0.5
+                      (item) =>
+                        item.annotation.polarity_score > 0.5 &&
+                        item.annotation.polarity_score < 0.75 + polarityMargin
                     )}
                   />
                 }
@@ -194,7 +206,9 @@ const Loaf = () => {
                   <TweetsList
                     hideNameandDate={true}
                     tweets={data['sticks'].filter(
-                      (item) => item.annotation.polarity_score < 0.5
+                      (item) =>
+                        item.annotation.polarity_score < 0.5 &&
+                        item.annotation.polarity_score > 0.25 - polarityMargin
                     )}
                   />
                 }
